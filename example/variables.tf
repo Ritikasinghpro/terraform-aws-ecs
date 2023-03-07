@@ -1,3 +1,9 @@
-variable "name" {
-  description = "Name of ECS cluster."
+locals {
+  env = {
+    dev = {
+      cluster_name        = "ritika-ecs"
+    }
+  }
+
+  workspace = local.env[dev.cluster_name]
 }
