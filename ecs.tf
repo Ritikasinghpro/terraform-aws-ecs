@@ -6,3 +6,4 @@ resource "aws_ecs_cluster" "ecs" {
   }
 
 }
+
