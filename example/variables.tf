@@ -5,5 +5,5 @@ locals {
     }
   }
 
-  workspace = local.env[dev.cluster_name]
+  workspace = local.env.dev[terraform.cluster_name]
 }
