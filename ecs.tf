@@ -30,6 +30,12 @@ resource "aws_ecs_task_definition" "tas_definition" {
       memory      = each.value.memory
       mountPoints = []
       volumesFrom = []
+      secrets = [
+        {
+          name      = "SECRET_MANAGER_ARN"
+          valueFrom = each.value.secret_manager_arn
+        }
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -37,12 +43,12 @@ resource "aws_ecs_task_definition" "tas_definition" {
           awslogs-region        = "us-east-1"
           awslogs-stream-prefix = "ecs"
         }
-        secretOptions = [
-          {
-            name      = "SECRET_MANAGER_ARN"
-            valueFrom = each.value.secret_manager_arn
-          }
-        ]
+        # secretOptions = [
+        #   {
+        #     name      = "SECRET_MANAGER_ARN"
+        #     valueFrom = each.value.secret_manager_arn
+        #   }
+        # ]
       }
     }]
   )
