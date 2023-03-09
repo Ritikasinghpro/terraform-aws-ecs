@@ -7,30 +7,47 @@ resource "aws_ecs_cluster" "ecs" {
 
 }
 
-resource "aws_ecs_task_definition" "my_taskdefinition" {
-  family                   = "my_taskdefinition"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  execution_role_arn       = "arn:aws:iam::111111111111:role/execution-role"
-  task_role_arn            = "arn:aws:iam::111111111111:role/task-role"
+resource "aws_ecs_task_definition" "tas_definition" {
+  for_each                 = var.task_definition
+  family                   = each.value.name
+  requires_compatibilities = each.value.requires_compatibilities
+  network_mode             = each.value.network_mode
+  execution_role_arn       = aws_iam_role.task_definition_role.arn
+  task_role_arn            = aws_iam_role.task_definition_role.arn
   container_definitions = jsonencode(
     [{
-      name             = "nginx"
-      image            = "nginx:latest"
-      essential        = true
+      name      = each.value.container_name
+      image     = each.value.image
+      essential = true
       portMappings = [
         {
-          containerPort = 8080
+          containerPort = each.value.containerPort
           hostPort      = 0
           protocol      = "tcp"
         }
       ]
-      cpu               = 256
-      memory            = 512
+      cpu         = each.value.cpu
+      memory      = each.value.memory
       mountPoints = []
       volumesFrom = []
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = each.value.log_group
+          awslogs-region        = "us-east-1"
+          awslogs-stream-prefix = "ecs"
+        }
+        # "secretOptions": [{
+        # 	"name": "splunk-token",
+        # 	"valueFrom": "/ecs/logconfig/splunkcred"
+        # }]
+      }
     }]
   )
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 
