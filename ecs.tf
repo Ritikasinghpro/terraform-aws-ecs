@@ -7,17 +7,17 @@ resource "aws_ecs_cluster" "ecs" {
 
 }
 
-resource "aws_ecs_task_definition" "tas_definition" {
+resource "aws_ecs_task_definition" "task_definition" {
   for_each                 = var.task_definition
   family                   = each.value.name
   requires_compatibilities = each.value.requires_compatibilities
   network_mode             = each.value.network_mode
   execution_role_arn       = aws_iam_role.task_definition_role.arn
   task_role_arn            = aws_iam_role.task_definition_role.arn
-  # volume {
-  #   name      = "logs"
-  #   host_path = "/home/ec2-user"
-  # }
+  volume {
+    name      = each.value.volume_name
+    host_path = each.value.host_path
+  }
   container_definitions = jsonencode(
     [{
       name      = each.value.container_name
@@ -26,13 +26,13 @@ resource "aws_ecs_task_definition" "tas_definition" {
       portMappings = [
         {
           containerPort = each.value.containerPort
-          hostPort      = 0
-          protocol      = "tcp"
+          hostPort      = each.value.hostPort
+          protocol      = each.value.protocol
         }
       ]
-      cpu    = each.value.cpu
-      memory = each.value.memory
-      # mountPoints = []
+      cpu         = each.value.cpu
+      memory      = each.value.memory
+      mountPoints = each.value.mountPoints
       # mountPoints = [
       #   {
       #     sourceVolume  = "logs",
@@ -41,18 +41,13 @@ resource "aws_ecs_task_definition" "tas_definition" {
       # ]
       volumesFrom = []
 
-      secrets = [
-        {
-          name      = "SECRET_MANAGER_ARN"
-          valueFrom = each.value.secret_manager_arn
-        }
-      ]
+      secrets = each.value.secrets
       logConfiguration = {
         logDriver = "awslogs"
         options = {
           awslogs-group         = each.value.log_group
-          awslogs-region        = "us-east-1"
-          awslogs-stream-prefix = "ecs"
+          awslogs-region        = each.value.region
+          awslogs-stream-prefix = each.value.logs_prefix
         }
         # secretOptions = [
         #   {
