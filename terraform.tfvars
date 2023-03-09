@@ -60,3 +60,18 @@ task_definition = {
     ]
   }
 }
+
+service = {
+  sv1 = {
+    name = "sv1"
+    task_definition_name = "td1"
+    desired_count = 2
+
+  },
+    sv2 = {
+    name = "sv2"
+    task_definition_name = "td2"
+    desired_count = 2
+
+  }
+}

@@ -11,3 +11,7 @@ variable "container_insights" {
 variable "task_definition" {
 
 }
+
+variable "service" {
+
+}
