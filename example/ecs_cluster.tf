@@ -20,7 +20,7 @@ module "task-definition" {
     {
       containerPort = 8080
       protocol      = "TCP"
-    },
+    }
   ]
 }
 
