@@ -7,7 +7,6 @@ module "task-definition" {
   source = "git@github.com:Ritikasinghpro/terraform-aws-ecs.git"
   name   = "nginx-td"
   family = "test-td"  #unique name for task defintion
-  execution_role_arn = ""
   network_mode = "bridge"
   requires_compatibilities = "EC2"
   logConfiguration = {
