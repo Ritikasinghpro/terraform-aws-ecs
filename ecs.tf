@@ -26,10 +26,24 @@ resource "aws_ecs_task_definition" "tas_definition" {
           protocol      = "tcp"
         }
       ]
-      cpu         = each.value.cpu
-      memory      = each.value.memory
-      mountPoints = []
+      cpu    = each.value.cpu
+      memory = each.value.memory
+      # mountPoints = []
+      mountPoints = [
+        {
+          sourceVolume  = "logs",
+          containerPath = "/opt/logs"
+        }
+      ]
       volumesFrom = []
+      volumes = [
+        {
+          host = {
+            sourcePath = "/home/ec2-user/cloudonomic-ecs-dev-node-frontend"
+          },
+          name = "logs"
+        }
+      ]
       secrets = [
         {
           name      = "SECRET_MANAGER_ARN"
