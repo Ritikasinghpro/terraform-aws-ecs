@@ -38,9 +38,9 @@ resource "aws_ecs_task_definition" "tas_definition" {
       volumesFrom = []
       volumes = [
         {
-          host = {
-            sourcePath = "/home/ec2-user/cloudonomic-ecs-dev-node-frontend"
-          },
+          # host = {
+          #   sourcePath = "/home/ec2-user/cloudonomic-ecs-dev-node-frontend"
+          # },
           name = "logs"
         }
       ]
