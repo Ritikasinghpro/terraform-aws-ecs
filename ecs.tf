@@ -37,10 +37,12 @@ resource "aws_ecs_task_definition" "tas_definition" {
           awslogs-region        = "us-east-1"
           awslogs-stream-prefix = "ecs"
         }
-        # "secretOptions": [{
-        # 	"name": "splunk-token",
-        # 	"valueFrom": "/ecs/logconfig/splunkcred"
-        # }]
+        secretOptions = [
+          {
+            name      = "SECRET_MANAGER_ARN"
+            valueFrom = each.value.secret_manager_arn
+          }
+        ]
       }
     }]
   )
