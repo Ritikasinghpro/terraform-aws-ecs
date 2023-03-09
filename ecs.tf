@@ -29,12 +29,12 @@ resource "aws_ecs_task_definition" "tas_definition" {
       cpu    = each.value.cpu
       memory = each.value.memory
       # mountPoints = []
-      mountPoints = [
-        {
-          sourceVolume  = "logs",
-          containerPath = "/opt/logs"
-        }
-      ]
+      # mountPoints = [
+      #   {
+      #     sourceVolume  = "logs",
+      #     containerPath = "/opt/logs"
+      #   }
+      # ]
       volumesFrom = []
       volumes = [
         {
