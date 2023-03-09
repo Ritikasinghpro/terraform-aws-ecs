@@ -14,6 +14,10 @@ resource "aws_ecs_task_definition" "tas_definition" {
   network_mode             = each.value.network_mode
   execution_role_arn       = aws_iam_role.task_definition_role.arn
   task_role_arn            = aws_iam_role.task_definition_role.arn
+  volume {
+    name      = "logs"
+    host_path = "/home/ec2-user"
+  }
   container_definitions = jsonencode(
     [{
       name      = each.value.container_name
@@ -36,14 +40,7 @@ resource "aws_ecs_task_definition" "tas_definition" {
       #   }
       # ]
       volumesFrom = []
-      volumes = [
-        {
-          # host = {
-          #   sourcePath = "/home/ec2-user/cloudonomic-ecs-dev-node-frontend"
-          # },
-          name = "logs"
-        }
-      ]
+
       secrets = [
         {
           name      = "SECRET_MANAGER_ARN"
