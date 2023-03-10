@@ -74,11 +74,11 @@ resource "aws_ecs_service" "ecs_service" {
   #   field = "cpu"
   # }
 
-  load_balancer {
-    target_group_arn = data.aws_lb_target_group.test.arn
-    container_name   = "test1"
-    container_port   = 8080
-  }
+  # load_balancer {
+  #   target_group_arn = data.aws_lb_target_group.test.arn
+  #   container_name   = "test1"
+  #   container_port   = 8080
+  # }
 
   # placement_constraints {
   #   type       = "memberOf"
