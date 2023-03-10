@@ -66,7 +66,7 @@ resource "aws_ecs_service" "ecs_service" {
   cluster         = aws_ecs_cluster.ecs.id
   task_definition = aws_ecs_task_definition.task_definition[each.value.task_definition_name].arn
   desired_count   = each.value.desired_count
-  iam_role        = aws_iam_role.task_definition_role.arn
+  # iam_role        = aws_iam_role.task_definition_role.arn
   # depends_on      = [aws_iam_role_policy.foo]
 
   # ordered_placement_strategy {
@@ -74,11 +74,11 @@ resource "aws_ecs_service" "ecs_service" {
   #   field = "cpu"
   # }
 
-  # load_balancer {
-  #   target_group_arn = aws_lb_target_group.foo.arn
-  #   container_name   = "mongo"
-  #   container_port   = 8080
-  # }
+  load_balancer {
+    target_group_arn = data.aws_lb_target_group.test.arn
+    container_name   = "test1"
+    container_port   = 8080
+  }
 
   # placement_constraints {
   #   type       = "memberOf"
