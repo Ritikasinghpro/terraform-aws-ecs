@@ -40,7 +40,13 @@ module "ecs_cluster" {
 
 ## Inputs
 
-No inputs.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="container_insights"></a> [custom\_domain](#input\container_insights) | n/a | `bool` | `true` | no |
+| <a name="log_group"></a> [domain\_name](#input\log_group) | n/a | `string` | `n/a` | no |
+| <a name="force_new_deployment"></a> [environment](#input\force_new_deployment) | n/a | `bool` | `true` | no |
+
 
 ## Outputs
 
