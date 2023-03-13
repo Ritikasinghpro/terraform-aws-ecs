@@ -25,6 +25,9 @@ resource "aws_ecs_task_definition" "task_definition" {
       name      = each.value.container_name
       image     = each.value.image
       essential = true
+      tags = {
+        Name = each.value.name
+        }
       portMappings = [
         {
           containerPort = each.value.containerPort
@@ -42,9 +45,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       #   }
       # ]
       volumesFrom = []
-      tags = {
-        Name = each.value.name
-        }
+      
       secrets = each.value.secrets
       logConfiguration = {
         logDriver = "awslogs"
