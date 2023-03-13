@@ -43,9 +43,9 @@ module "ecs_cluster" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="container_insights"></a> [custom\_domain](#input\container_insights) | n/a | `bool` | `true` | no |
-| <a name="log_group"></a> [domain\_name](#input\log_group) | n/a | `string` | `n/a` | no |
-| <a name="force_new_deployment"></a> [environment](#input\force_new_deployment) | n/a | `bool` | `true` | no |
+| <a name="container_insights"></a> [container\_insights](#container\insights) | n/a | `bool` | `true` | no |
+| <a name="log_group"></a> [log\_group](#log\group) | n/a | `string` | `n/a` | no |
+| <a name="force_new_deployment"></a> [force\_new\_deployment](#force\new\deployment) | n/a | `bool` | `true` | no |
 
 
 ## Outputs
