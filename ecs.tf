@@ -72,10 +72,12 @@ resource "aws_ecs_service" "ecs_service" {
   task_definition = aws_ecs_task_definition.task_definition[each.value.task_definition_name].arn
   desired_count   = each.value.desired_count
   force_new_deployment = each.value.force_new_deployment
+  health_check_grace_period_seconds = each.value.health_check_grace_period_seconds 
   tags = {
     Name = each.value.name
   }
-  service_registries = each.value.service_registries
+  deployment_maximum_percent         = each.value.deployment_maximum_percent 
+  deployment_minimum_healthy_percent = each.value.deployment_minimum_healthy_percent  
   # iam_role        = aws_iam_role.task_definition_role.arn
   # depends_on      = [aws_iam_role_policy.foo]
 
