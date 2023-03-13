@@ -16,6 +16,9 @@ resource "aws_ecs_task_definition" "task_definition" {
   network_mode             = each.value.network_mode
   execution_role_arn       = aws_iam_role.task_definition_role.arn
   task_role_arn            = aws_iam_role.task_definition_role.arn
+  tags = {
+        Name = each.value.name
+        }
   volume {
     name      = each.value.volume_name
     host_path = each.value.host_path
@@ -25,9 +28,6 @@ resource "aws_ecs_task_definition" "task_definition" {
       name      = each.value.container_name
       image     = each.value.image
       essential = true
-      tags = {
-        Name = each.value.name
-        }
       portMappings = [
         {
           containerPort = each.value.containerPort
@@ -71,9 +71,11 @@ resource "aws_ecs_service" "ecs_service" {
   cluster         = aws_ecs_cluster.ecs.id
   task_definition = aws_ecs_task_definition.task_definition[each.value.task_definition_name].arn
   desired_count   = each.value.desired_count
+  force_new_deployment = each.value.force_new_deployment
   tags = {
     Name = each.value.name
   }
+  service_registries = each.value.service_registries
   # iam_role        = aws_iam_role.task_definition_role.arn
   # depends_on      = [aws_iam_role_policy.foo]
 
