@@ -4,7 +4,9 @@ resource "aws_ecs_cluster" "ecs" {
     name  = "containerInsights"
     value = var.container_insights ? "enabled" : "disabled"
   }
-  tags = var.name
+  tags = {
+    Name = var.name
+  }
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
@@ -40,7 +42,9 @@ resource "aws_ecs_task_definition" "task_definition" {
       #   }
       # ]
       volumesFrom = []
-      tags = each.value.name
+      tags = {
+        Name = each.value.name
+        }
       secrets = each.value.secrets
       logConfiguration = {
         logDriver = "awslogs"
@@ -66,7 +70,9 @@ resource "aws_ecs_service" "ecs_service" {
   cluster         = aws_ecs_cluster.ecs.id
   task_definition = aws_ecs_task_definition.task_definition[each.value.task_definition_name].arn
   desired_count   = each.value.desired_count
-  tags = each.value.name
+  tags = {
+    Name = each.value.name
+  }
   # iam_role        = aws_iam_role.task_definition_role.arn
   # depends_on      = [aws_iam_role_policy.foo]
 
