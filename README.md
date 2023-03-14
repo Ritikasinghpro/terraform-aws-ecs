@@ -5,10 +5,12 @@
 
 The following content needed to be created and managed:
  - Introduction
-     - Explaination of module 
-     - Intended users
- - Resource created and managed by this module
- - Example Usages
+     - This terraform module builds an Empty Elastic Container Service(ECS) Cluster in AWS along with Services and Task definitions.
+     - The following resources will be created:
+        - Empty Cluster 
+        - IAM Roles
+        - Services
+        - Task Definitions
 
 
 <!-- BEGIN_TF_DOCS -->
@@ -21,26 +23,34 @@ The following content needed to be created and managed:
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.10 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 3.0 |
 
-## Providers
+## Usages
 
-No providers.
-
-## Modules
-
-No modules.
-
-## Resources
-
-No resources.
+```
+module "ecs_cluster" {
+  source               = "git@github.com:Ritikasinghpro/terraform-aws-ecs.git?ref=b1"
+  name                 = var.name
+  task_definition      = var.task_definition
+  service              = var.service
+  container_insights   = false
+  tags                 = {
+    Name = var.name
+  }
+  }
+```
 
 ## Inputs
 
-No inputs.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="container_insights"></a> [container\_insights](#container\insights) | n/a | `bool` | `true` | no |
+| <a name="log_group"></a> [log\_group](#log\group) | n/a | `string` | `n/a` | no |
+| <a name="force_new_deployment"></a> [force\_new\_deployment](#force\new\deployment) | n/a | `bool` | `true` | no |
+
 
 ## Outputs
 
-No outputs.
-<!-- END_TF_DOCS -->
+No inputs.
 
 ## Authors
 
