@@ -72,7 +72,7 @@ resource "aws_ecs_service" "ecs_service" {
   task_definition = aws_ecs_task_definition.task_definition[each.value.task_definition_name].arn
   desired_count   = each.value.desired_count
   force_new_deployment = each.value.force_new_deployment
-  health_check_grace_period_seconds = each.value.health_check_grace_period_seconds 
+  # health_check_grace_period_seconds = each.value.health_check_grace_period_seconds 
   tags = {
     Name = each.value.name
   }
