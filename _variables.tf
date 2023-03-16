@@ -16,3 +16,10 @@ variable "service" {
 
 }
 
+variable "task-definition-role-name" {
+  
+}
+
+variable "task-definition-policy-name" {
+  
+}
